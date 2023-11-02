@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,8 +40,27 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.common',
     'apps.calculator',
-    'apps.todolist'
+    'apps.todolist',
+    'apps.contactlist'
 ]
+
+REST_FRAMEWORK = {
+    "CHARSET": "utf-8",
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    "EXCEPTION_HANDLER": "apps.utils.exceptions.custom_exceptions",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,10 +74,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mypractice.urls'
 
+def location(x):
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), x)
+    return path
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [location("templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,3 +155,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+try:
+    from .logger import *
+except ImportError as err:
+    print(err)
