@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'apps.common',
     'apps.calculator',
     'apps.todolist',
-    'apps.contactlist'
+    'apps.contactlist',
+    'bookstore'
 ]
 
 REST_FRAMEWORK = {

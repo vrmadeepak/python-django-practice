@@ -80,5 +80,9 @@ LOGGING = {
             "handlers": ["console", "logfile"],
             "level": "DEBUG",
         },
+        "bookstore": {
+            "handlers": ["console", "logfile"],
+            "level": "DEBUG",
+        },
     },
 }

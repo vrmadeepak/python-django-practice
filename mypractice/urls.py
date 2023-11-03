@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/calculator/', include('apps.calculator.urls')),
     path('api/todolist/', include('apps.todolist.urls')),
     path('api/contactlist/', include('apps.contactlist.urls')),
+    path('api/bookstore/', include('bookstore.urls')),
 ]
